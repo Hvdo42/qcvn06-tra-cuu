@@ -4,7 +4,7 @@ Công cụ tra cứu nhanh **QCVN 06:2022/BXD** tích hợp **Sửa đổi 1:202
 
 **Tác giả:** Võ Đỗ Hùng
 
-👉 **[Dùng ngay trên trình duyệt](https://vodohhung.github.io/qcvn06/)** _(cập nhật link sau khi deploy)_
+👉 **[Dùng ngay trên trình duyệt] https://hvdo42.github.io/qcvn06-tra-cuu/
 
 ---
 
