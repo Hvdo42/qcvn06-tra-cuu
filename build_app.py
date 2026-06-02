@@ -370,9 +370,18 @@ HTML = (
     '.tab-content{display:none;padding:16px 20px;max-width:1200px;margin:0 auto}\n'
     '.tab-content.active{display:block}\n'
     '.form-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;background:#fff;border-radius:8px;padding:16px;margin-bottom:16px;box-shadow:0 1px 4px rgba(0,0,0,.1)}\n'
-    '.form-group label{display:block;font-size:12px;color:#555;margin-bottom:4px;font-weight:600}\n'
+    '.form-group label{display:flex;align-items:center;gap:4px;font-size:12px;color:#555;margin-bottom:4px;font-weight:600}\n'
     '.form-group input,.form-group select{width:100%;border:1px solid #ccc;border-radius:4px;padding:7px 10px;font-size:14px;outline:none}\n'
     '.form-group input:focus,.form-group select:focus{border-color:#1565C0}\n'
+    '.hint-btn{background:none;border:none;cursor:pointer;color:#1976D2;font-size:13px;padding:0;line-height:1;flex-shrink:0;opacity:.8}\n'
+    '.hint-btn:hover{opacity:1}\n'
+    '.hint-box{display:none;margin-top:5px;padding:8px 10px;background:#E8F4FD;border-left:3px solid #1976D2;border-radius:0 4px 4px 0;font-size:12px;color:#1A237E;line-height:1.6;font-weight:normal}\n'
+    '.hint-box.open{display:block}\n'
+    '.hint-box b{color:#0D47A1}\n'
+    '.hint-box .ref{font-size:11px;margin-top:6px;display:flex;flex-wrap:wrap;gap:4px;align-items:center}\n'
+    '.hint-box .ref-label{color:#888}\n'
+    '.hint-box .ref a{display:inline-block;background:#1565C0;color:#fff;padding:2px 8px;border-radius:10px;text-decoration:none;font-size:11px;font-weight:600;cursor:pointer}\n'
+    '.hint-box .ref a:hover{background:#1976D2}\n'
     '.radio-group{display:flex;gap:16px;margin-top:4px}\n'
     '.radio-group label{font-size:14px;font-weight:normal;color:#222;cursor:pointer;display:flex;align-items:center;gap:4px}\n'
     '.btn-check{background:#1565C0;color:#fff;border:none;padding:10px 24px;border-radius:6px;cursor:pointer;font-size:15px;font-weight:600;margin-bottom:16px}\n'
@@ -414,6 +423,27 @@ HTML = (
     '.entry-card.is-heading{background:#E3F2FD}\n'
     '.entry-card.is-heading .ec-text{font-weight:700;color:#1565C0}\n'
     'mark{background:#FFF176;padding:0 2px;border-radius:2px}\n'
+    '.qcvn-table{border-collapse:collapse;width:100%;font-size:12px;margin:4px 0}\n'
+    '.qcvn-table th,.qcvn-table td{border:1px solid #CFD8DC;padding:4px 8px;text-align:left;vertical-align:top}\n'
+    '.qcvn-table th{background:#E3F2FD;font-weight:600;color:#1565C0}\n'
+    '.qcvn-table tr:nth-child(even) td{background:#F8FAFE}\n'
+    '.entry-table{overflow-x:auto}\n'
+    '/* Modal */\n'
+    '.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:1000;align-items:flex-start;justify-content:center;padding:48px 16px 16px}\n'
+    '.modal-overlay.open{display:flex}\n'
+    '.modal{background:#fff;border-radius:10px;max-width:760px;width:100%;max-height:82vh;display:flex;flex-direction:column;box-shadow:0 8px 32px rgba(0,0,0,.25)}\n'
+    '.modal-header{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid #e0e0e0;background:#1565C0;color:#fff;border-radius:10px 10px 0 0}\n'
+    '.modal-header h3{font-size:14px;font-weight:700;margin:0}\n'
+    '.modal-close{background:none;border:none;color:#fff;font-size:20px;cursor:pointer;padding:0 4px;line-height:1;opacity:.85}\n'
+    '.modal-close:hover{opacity:1}\n'
+    '.modal-body{overflow-y:auto;padding:16px 18px;flex:1}\n'
+    '.modal-entry{padding:10px 0;border-bottom:1px solid #f0f0f0}\n'
+    '.modal-entry:last-child{border-bottom:none}\n'
+    '.modal-entry .me-sec{font-size:11px;color:#888;margin-bottom:4px}\n'
+    '.modal-entry .me-clause{font-weight:700;color:#1565C0;font-size:12px}\n'
+    '.modal-entry .me-text{font-size:13px;color:#333;line-height:1.6}\n'
+    '.modal-entry table{font-size:12px}\n'
+    '.modal-go{display:inline-block;margin-top:10px;font-size:12px;color:#1565C0;cursor:pointer;text-decoration:underline}\n'
     '.no-results{text-align:center;padding:32px;color:#888;background:#fff;border-radius:8px}\n'
     '.disclaimer{background:#FFF3CD;border-left:4px solid #FFC107;padding:10px 16px;font-size:12px;color:#664D03;line-height:1.5}\n'
     '.disclaimer strong{color:#B45309}\n'
@@ -444,7 +474,15 @@ HTML = (
     '  <div style="padding:12px 0 8px;font-size:13px;color:#555">Nhập thông tin nhà để tra cứu các yêu cầu PCCC áp dụng.</div>\n'
     '  <div class="form-grid">\n'
     '    <div class="form-group">\n'
-    '      <label>Nhóm công năng</label>\n'
+    '      <label>Nhóm công năng <button class="hint-btn" onclick="toggleHint(\'h-nhom\')" title="Hướng dẫn">&#9432;</button></label>\n'
+    '      <div class="hint-box" id="h-nhom">'
+    '<b>Xác định theo công năng sử dụng thực tế</b> của nhà (điều 1.5.6 [SĐ1]).<br>'
+    'Tham chiếu: <b>Bảng 6 – Phần 2.6</b> phân nhóm F1÷F5 theo mục đích sử dụng.<br>'
+    'Nhà hỗn hợp (ở + TM): xác định theo nhóm có diện tích lớn hơn 70% tổng diện tích sàn.'
+    '<span class="ref"><span class="ref-label">Tra cứu:</span>'
+    '<a onclick="showRef(\'1.4.43\')">Điều 1.4.43</a>'
+    '<a onclick="showRef(\'Bảng 6\',\'2\')">Bảng 6</a>'
+    '</span></div>\n'
     '      <select id="f-nhom">\n'
     '        <option value="">-- Chọn nhóm --</option>\n'
     '        <optgroup label="F1 – Nhà ở">\n'
@@ -480,24 +518,86 @@ HTML = (
     '        </optgroup>\n'
     '      </select>\n'
     '    </div>\n'
-    '    <div class="form-group"><label>Chiều cao PCCC (m)</label>'
+    '    <div class="form-group">'
+    '<label>Chiều cao PCCC (m) <button class="hint-btn" onclick="toggleHint(\'h-cc\')" title="Hướng dẫn">&#9432;</button></label>'
+    '<div class="hint-box" id="h-cc">'
+    '<b>Khoảng cách lớn nhất</b> từ mặt đường cho xe chữa cháy tiếp cận được đến <b>mép dưới lỗ cửa sổ tầng cao nhất</b> (không tính tầng kỹ thuật trên cùng).<br>'
+    'Chú ý: đo theo phương thẳng đứng, lấy giá trị lớn nhất theo các mặt nhà.'
+    '<span class="ref"><span class="ref-label">Tra cứu:</span>'
+    '<a onclick="showRef(\'1.4.9\')">Điều 1.4.9</a>'
+    '<a onclick="showRef(\'chiều cao PCCC\')">Chiều cao PCCC</a>'
+    '</span></div>'
     '<input type="number" id="f-chieu-cao" min="0" max="500" step="0.5" placeholder="Ví dụ: 25.5"></div>\n'
-    '    <div class="form-group"><label>Số tầng nổi</label>'
+    '    <div class="form-group">'
+    '<label>Số tầng nổi <button class="hint-btn" onclick="toggleHint(\'h-tang\')" title="Hướng dẫn">&#9432;</button></label>'
+    '<div class="hint-box" id="h-tang">'
+    '<b>Tổng số tầng trên mặt đất</b>, bao gồm tầng nửa hầm.<br>'
+    '<b>Không tính:</b> tầng kỹ thuật trên cùng; tầng lửng (với nhà F1÷F4) [SĐ1].<br>'
+    'Dùng để kiểm tra điều kiện họng nước, phân loại buồng thang.'
+    '<span class="ref"><span class="ref-label">Tra cứu:</span>'
+    '<a onclick="showRef(\'1.4.50\')">Điều 1.4.50</a>'
+    '<a onclick="showRef(\'Bảng 11\',\'5\')">Bảng 11</a>'
+    '</span></div>'
     '<input type="number" id="f-so-tang" min="1" max="100" step="1" placeholder="Ví dụ: 10"></div>\n'
-    '    <div class="form-group"><label>Số tầng hầm</label>'
+    '    <div class="form-group">'
+    '<label>Số tầng hầm <button class="hint-btn" onclick="toggleHint(\'h-ham\')" title="Hướng dẫn">&#9432;</button></label>'
+    '<div class="hint-box" id="h-ham">'
+    '<b>Tầng hầm:</b> tầng có hơn 1/2 chiều cao nằm dưới cao độ mặt đất theo quy hoạch (1.4.57).<br>'
+    '<b>Tầng nửa hầm:</b> từ 1/3 đến 1/2 chiều cao nằm dưới mặt đất → tính là tầng nổi, không phải tầng hầm.'
+    '<span class="ref"><span class="ref-label">Tra cứu:</span>'
+    '<a onclick="showRef(\'1.4.57\')">Điều 1.4.57</a>'
+    '<a onclick="showRef(\'3.2.5\',\'3\')">Điều 3.2.5b</a>'
+    '</span></div>'
     '<select id="f-tang-ham"><option value="0">0</option><option value="1">1</option>'
     '<option value="2">2</option><option value="3">3</option></select></div>\n'
-    '    <div class="form-group"><label>Bậc chịu lửa</label>'
+    '    <div class="form-group">'
+    '<label>Bậc chịu lửa <button class="hint-btn" onclick="toggleHint(\'h-bac\')" title="Hướng dẫn">&#9432;</button></label>'
+    '<div class="hint-box" id="h-bac">'
+    '<b>Bậc chịu lửa</b> xác định theo GHCL của các cấu kiện chịu lực chính (cột, dầm, sàn, tường).<br>'
+    'Tra: so sánh GHCL thực tế của các cấu kiện với <b>Bảng 4</b> → xác định bậc I÷V.<br>'
+    'GHCL danh định cấu kiện BTCT, thép xem <b>Phụ lục F</b>.'
+    '<span class="ref"><span class="ref-label">Tra cứu:</span>'
+    '<a onclick="showRef(\'Bảng 4\',\'2\')">Bảng 4</a>'
+    '<a onclick="showRef(\'Bảng F\',\'F\')">Phụ lục F</a>'
+    '<a onclick="showRef(\'2.5\',\'2\')">Điều 2.5</a>'
+    '</span></div>'
     '<select id="f-bac"><option value="">-- Chọn bậc --</option>'
     '<option value="I">Bậc I</option><option value="II">Bậc II</option>'
     '<option value="III">Bậc III</option><option value="IV">Bậc IV</option>'
     '<option value="V">Bậc V</option></select></div>\n'
-    '    <div class="form-group"><label>Diện tích một tầng (m²)</label>'
+    '    <div class="form-group">'
+    '<label>Diện tích một tầng (m²) <button class="hint-btn" onclick="toggleHint(\'h-dt\')" title="Hướng dẫn">&#9432;</button></label>'
+    '<div class="hint-box" id="h-dt">'
+    '<b>Diện tích sàn của một tầng trong phạm vi một khoang cháy</b> (không phải tổng diện tích sàn nhà).<br>'
+    'Dùng để kiểm tra: điều kiện họng nước (Bảng 11), số lối ra thoát nạn (3.2.5d), diện tích khoang cháy tối đa (Phụ lục H).'
+    '<span class="ref"><span class="ref-label">Tra cứu:</span>'
+    '<a onclick="showRef(\'Bảng H.1\',\'H\')">Bảng H.1÷H.14</a>'
+    '<a onclick="showRef(\'Bảng 11\',\'5\')">Bảng 11</a>'
+    '<a onclick="showRef(\'3.2.5\',\'3\')">Điều 3.2.5</a>'
+    '</span></div>'
     '<input type="number" id="f-dien-tich" min="0" step="1" placeholder="Ví dụ: 1500"></div>\n'
-    '    <div class="form-group"><label>Số người tối đa / tầng</label>'
+    '    <div class="form-group">'
+    '<label>Số người tối đa / tầng <button class="hint-btn" onclick="toggleHint(\'h-nn\')" title="Hướng dẫn">&#9432;</button></label>'
+    '<div class="hint-box" id="h-nn">'
+    '<b>Số người đồng thời có mặt trên tầng đông người nhất</b> (không phải tổng số người cả nhà).<br>'
+    'Có thể tra theo mật độ sử dụng: <b>Bảng G.9</b> (Phụ lục G) cho từng loại công trình.<br>'
+    'Ví dụ: văn phòng ~10 m²/người; phòng họp ~1,5 m²/người; siêu thị ~5 m²/người.'
+    '<span class="ref"><span class="ref-label">Tra cứu:</span>'
+    '<a onclick="showRef(\'G.3\',\'G\')">Bảng G.9</a>'
+    '<a onclick="showRef(\'3.2.5\',\'3\')">Điều 3.2.5</a>'
+    '</span></div>'
     '<input type="number" id="f-so-nguoi" min="0" step="1" placeholder="Ví dụ: 80"></div>\n'
     '    <div class="form-group" style="grid-column:1/-1">\n'
-    '      <label>Có hệ thống chữa cháy tự động?</label>\n'
+    '      <label>Có hệ thống chữa cháy tự động? <button class="hint-btn" onclick="toggleHint(\'h-cctn\')" title="Hướng dẫn">&#9432;</button></label>\n'
+    '      <div class="hint-box" id="h-cctn">'
+    '<b>Hệ thống chữa cháy tự động (Sprinkler)</b> là hệ thống phun nước tự động khi có cháy.<br>'
+    '<b>Điều kiện bắt buộc:</b> xem Bảng 12 (F1÷F4 có PCCC >28m; F2/F3 diện tích >3.500m²...).<br>'
+    'Khi có CCTN: được miễn đai ngăn cháy (4.32.2), dải ngăn cháy (4.33.4) [SĐ1]; ảnh hưởng đến yêu cầu lối ra thoát nạn.'
+    '<span class="ref"><span class="ref-label">Tra cứu:</span>'
+    '<a onclick="showRef(\'Bảng 12\',\'5\')">Bảng 12</a>'
+    '<a onclick="showRef(\'4.32.2\',\'4\')">Điều 4.32.2</a>'
+    '<a onclick="showRef(\'4.33.4\',\'4\')">Điều 4.33.4</a>'
+    '</span></div>\n'
     '      <div class="radio-group">\n'
     '        <label><input type="radio" name="cctn" value="co"> Có</label>\n'
     '        <label><input type="radio" name="cctn" value="khong" checked> Không</label>\n'
@@ -712,12 +812,21 @@ function runSearch(){
   container.innerHTML = results.map(function(e){
     var sd1span    = e.sd1 ? '<span class="sd1-tag">SD1</span>' : '';
     var clauseSpan = e.clause ? '<span class="ec-clause">&#167; ' + escapeHtml(e.clause) + '</span>' : '';
-    var secSpan    = '<span class="ec-sec">' + escapeHtml(e.section_label.substring(0,30)) + '</span>';
-    var hClass     = e.is_heading ? 'is-heading' : '';
-    var textHtml   = highlight(e.text, query);
+    var secSpan    = '<span class="ec-sec">' + escapeHtml((e.section_label||'').substring(0,30)) + '</span>';
+    var hClass     = e.is_heading ? 'is-heading' : (e.is_table ? 'entry-table' : '');
+
+    var bodyHtml;
+    if(e.is_table && e.html){
+      // Render HTML table trực tiếp
+      var searchHint = query ? '<div class="ec-text" style="font-size:11px;color:#888;margin-bottom:4px">Từ khóa: <mark>' + escapeHtml(query) + '</mark></div>' : '';
+      bodyHtml = searchHint + e.html;
+    } else {
+      bodyHtml = '<div class="ec-text">' + highlight(e.text, query) + '</div>';
+    }
+
     return '<div class="entry-card ' + hClass + '">' +
              '<div class="ec-meta">' + clauseSpan + secSpan + sd1span + '</div>' +
-             '<div class="ec-text">' + textHtml + '</div>' +
+             bodyHtml +
            '</div>';
   }).join('');
 }
@@ -731,18 +840,117 @@ function showTab(id, btn){
   if(id === 'tab2'){ runSearch(); }
 }
 
+function toggleHint(id){
+  var el = document.getElementById(id);
+  if(el){ el.classList.toggle('open'); }
+}
+
+function showRef(term, sec){
+  var query = term.toLowerCase();
+  var entries = QCVN_DATA.entries;
+
+  // Tim tat ca entries phu hop
+  var results = entries.filter(function(e){
+    if(sec && e.section_type === 'phan' && String(e.section_key) !== sec) return false;
+    if(sec && e.section_type === 'phu_luc' && e.section_key !== sec) return false;
+    return e.text.toLowerCase().indexOf(query) >= 0 ||
+           (e.clause && e.clause.toLowerCase().indexOf(query) >= 0);
+  }).slice(0, 30);
+
+  var modal = document.getElementById('ref-modal');
+  var body  = document.getElementById('modal-body');
+  var title = document.getElementById('modal-title');
+
+  title.textContent = term + (sec ? ' — ' + (isNaN(sec) ? 'Phụ lục ' + sec : 'Phần ' + sec) : '');
+
+  if(!results.length){
+    body.innerHTML = '<p style="color:#888;padding:16px">Không tìm thấy nội dung cho "' + escapeHtml(term) + '".</p>';
+  } else {
+    body.innerHTML = results.map(function(e){
+      var clauseHtml = e.clause ? '<span class="me-clause">&#167; ' + escapeHtml(e.clause) + '</span> ' : '';
+      var secHtml = '<span class="me-sec">' + escapeHtml((e.section_label||'').substring(0,40)) + '</span>';
+      var contentHtml;
+      if(e.is_table && e.html){
+        contentHtml = '<div style="overflow-x:auto">' + e.html + '</div>';
+      } else {
+        contentHtml = '<div class="me-text">' + escapeHtml(e.text) + '</div>';
+      }
+      return '<div class="modal-entry">' + secHtml + '<br>' + clauseHtml + contentHtml + '</div>';
+    }).join('');
+    // Them link "Xem them trong Tab 2"
+    var modal = document.getElementById('ref-modal');
+    modal.dataset.term = term;
+    modal.dataset.sec  = sec || '';
+    body.innerHTML += '<div style="padding:12px 0;text-align:center">'
+      + '<span class="modal-go" onclick="goFromModal()">&#128269; Xem thêm kết quả trong Tab Tìm kiếm</span>'
+      + '</div>';
+  }
+
+  modal.classList.add('open');
+}
+
+function closeModal(e){
+  if(e.target === document.getElementById('ref-modal'))
+    document.getElementById('ref-modal').classList.remove('open');
+}
+
+function goFromModal(){
+  var m = document.getElementById('ref-modal');
+  searchAndGo(m.dataset.term, m.dataset.sec);
+}
+
+function searchAndGo(term, sec){
+  document.getElementById('ref-modal').classList.remove('open');
+  document.querySelectorAll('.hint-box.open').forEach(function(h){ h.classList.remove('open'); });
+  document.querySelectorAll('.tab-content').forEach(function(t){ t.classList.remove('active'); });
+  document.querySelectorAll('.tab-btn').forEach(function(b){ b.classList.remove('active'); });
+  document.getElementById('tab2').classList.add('active');
+  document.querySelectorAll('.tab-btn')[1].classList.add('active');
+  secFilter = sec || 'all';
+  document.querySelectorAll('.chip').forEach(function(c){ c.classList.remove('active'); });
+  var chip = document.querySelector('.chip[data-sec="' + secFilter + '"]');
+  if(chip) chip.classList.add('active');
+  else document.querySelector('.chip[data-sec="all"]').classList.add('active');
+  document.getElementById('s-query').value = term;
+  runSearch();
+  setTimeout(function(){
+    var el = document.getElementById('s-results');
+    if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
+  }, 80);
+}
+
 // Khoi dong
 document.getElementById('results-empty').style.display = 'block';
 </script>
+<div class="modal-overlay" id="ref-modal" onclick="closeModal(event)">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 id="modal-title">Nội dung tham chiếu</h3>
+      <button class="modal-close" onclick="document.getElementById('ref-modal').classList.remove('open')">&#10005;</button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+  </div>
+</div>
 <footer>
   <p>&#128293; <strong>QCVN 06:2022/BXD Tra cứu</strong> &nbsp;|&nbsp; Tác giả: <strong>Võ Đỗ Hùng</strong></p>
   <p style="margin-top:6px;opacity:.8">
-    Công cụ tra cứu nhanh, tham khảo. Không thay thế văn bản pháp luật chính thức.
+    Tra cứu nhanh, tham khảo cá nhân. Không thay thế văn bản pháp luật chính thức.
     Không dùng làm căn cứ thẩm định hồ sơ PCCC.
   </p>
-  <p style="margin-top:4px;opacity:.6;font-size:11px">
-    Nguồn: Thông tư 06/2022/TT-BXD &amp; Thông tư 09/2023/TT-BXD (BXD) &nbsp;|&nbsp;
-    Phiên bản nội dung có thể chưa cập nhật đầy đủ mọi sửa đổi.
+  <p style="margin-top:8px">
+    <a href="https://github.com/hvdo42/qcvn06-tra-cuu/issues/new" target="_blank"
+       style="background:#455A64;color:#80CBC4;padding:4px 12px;border-radius:4px;font-size:12px;text-decoration:none">
+      &#9998; Báo lỗi / Góp ý nội dung
+    </a>
+    &nbsp;
+    <a href="https://github.com/hvdo42/qcvn06-tra-cuu" target="_blank"
+       style="color:#90A4AE;font-size:12px">
+      GitHub
+    </a>
+  </p>
+  <p style="margin-top:6px;opacity:.6;font-size:11px">
+    Nguồn: TT 06/2022/TT-BXD &amp; TT 09/2023/TT-BXD &nbsp;|&nbsp;
+    Nội dung có thể chưa đầy đủ mọi sửa đổi.
   </p>
 </footer>
 </body>

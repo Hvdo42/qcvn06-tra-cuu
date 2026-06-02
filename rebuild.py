@@ -49,6 +49,27 @@ def detect_section(heading_text):
             return val[0], val[1], heading_text.strip()
     return 'khac', 0, heading_text.strip()
 
+TABLE_ROW_RE = re.compile(r'^\|.+\|$')
+
+def is_table_row(line):
+    return bool(TABLE_ROW_RE.match(line.strip()))
+
+def is_table_separator(line):
+    return bool(re.match(r'^\|[-| :]+\|$', line.strip()))
+
+def md_table_to_html(table_lines):
+    """Chuyển list dòng Markdown table thành HTML table."""
+    rows = [l for l in table_lines if not is_table_separator(l)]
+    if not rows:
+        return ''
+    html = ['<table class="qcvn-table">']
+    for i, row in enumerate(rows):
+        cells = [c.strip() for c in row.strip('|').split('|')]
+        tag = 'th' if i == 0 else 'td'
+        html.append('<tr>' + ''.join(f'<{tag}>{c}</{tag}>' for c in cells) + '</tr>')
+    html.append('</table>')
+    return '\n'.join(html)
+
 def parse_md(md_path):
     with open(md_path, encoding='utf-8') as f:
         raw_lines = f.readlines()
@@ -56,9 +77,62 @@ def parse_md(md_path):
     entries = []
     current_section = {'type': 'header', 'key': 0, 'label': 'Phần mở đầu'}
     entry_id = 0
+    # Tên bảng gần nhất (để gắn vào table entry)
+    last_table_name = None
 
-    for raw in raw_lines:
-        line = raw.rstrip('\n').rstrip('\r')
+    # Tách lines thành blocks (nhóm các dòng table liền nhau)
+    lines_processed = []
+    i = 0
+    all_lines = [l.rstrip('\n').rstrip('\r') for l in raw_lines]
+    while i < len(all_lines):
+        line = all_lines[i]
+        if is_table_row(line) or is_table_separator(line):
+            # Gom tất cả dòng table liên tiếp thành 1 block
+            table_block = []
+            while i < len(all_lines) and (is_table_row(all_lines[i]) or
+                                           is_table_separator(all_lines[i]) or
+                                           not all_lines[i].strip()):
+                if all_lines[i].strip():
+                    table_block.append(all_lines[i])
+                i += 1
+            if table_block:
+                lines_processed.append(('TABLE', table_block))
+        else:
+            lines_processed.append(('LINE', line))
+            i += 1
+
+    for item_type, item in lines_processed:
+
+        # ===== XỬ LÝ BẢNG =====
+        if item_type == 'TABLE':
+            table_lines = item
+            # Tạo text tìm kiếm: gom tất cả nội dung cells
+            search_text = ' '.join(
+                c.strip() for row in table_lines
+                if not is_table_separator(row)
+                for c in row.strip('|').split('|')
+                if c.strip()
+            )
+            # Tạo HTML table để render
+            html_table = md_table_to_html(table_lines)
+            entries.append({
+                'id': f'e_{entry_id}',
+                'clause': last_table_name,
+                'text': search_text,
+                'html': html_table,
+                'section_type': current_section['type'],
+                'section_key': current_section['key'],
+                'section_label': current_section['label'],
+                'sd1': False,
+                'is_heading': False,
+                'is_table': True,
+                'page': None,
+            })
+            entry_id += 1
+            continue
+
+        # ===== XỬ LÝ DÒNG THƯỜNG =====
+        line = item
 
         # Bỏ qua dòng trống, separator, blockquote, title chính
         if not line.strip():
@@ -70,17 +144,21 @@ def parse_md(md_path):
         if line.startswith('# ') and not line.startswith('## '):
             heading = line[2:].strip()
             if 'QCVN 06' in heading:
-                continue  # Skip title line
+                continue
             sec_type, sec_key, label = detect_section(heading)
             current_section = {'type': sec_type, 'key': sec_key, 'label': label}
+            last_table_name = None
             continue
 
         # Sub-heading (## )
         if line.startswith('## '):
             text = line[3:].strip()
-            # Phát hiện clause id trong sub-heading
             m = CLAUSE_RE.match(text)
             clause = m.group(1).strip() if m else None
+            # Ghi nhận tên bảng gần nhất
+            bm = re.search(r'B[aả]ng\s+([A-Za-z0-9\.\-]+)', text, re.IGNORECASE)
+            if bm:
+                last_table_name = 'Bảng ' + bm.group(1)
             sd1 = bool(SD1_RE.search(text))
             entries.append({
                 'id': f'e_{entry_id}',
@@ -96,8 +174,11 @@ def parse_md(md_path):
             entry_id += 1
             continue
 
-        # Entry thong thuong
+        # Entry thông thường — ghi nhận tên bảng nếu có
         text = line.strip()
+        bm = re.search(r'B[aả]ng\s+([A-Za-z0-9\.\-]+)', text, re.IGNORECASE)
+        if bm:
+            last_table_name = 'Bảng ' + bm.group(1)
         if not text:
             continue
 
