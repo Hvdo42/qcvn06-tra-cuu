@@ -1,0 +1,5 @@
+# Chỉ giữ app và README
+*
+!index.html
+!README.md
+!.gitignore
