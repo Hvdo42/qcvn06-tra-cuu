@@ -4,22 +4,7 @@ Công cụ tra cứu nhanh **QCVN 06:2022/BXD** tích hợp **Sửa đổi 1:202
 
 **Tác giả:** Võ Đỗ Hùng
 
-## Dùng ngay (không cần cài đặt)
-
-**Dùng online:** [https://hvdo42.github.io/qcvn06-tra-cuu/](https://hvdo42.github.io/qcvn06-tra-cuu/)
-
-**Dùng offline (không cần mạng):**
-1. Tải file: [index.html](https://github.com/Hvdo42/qcvn06-tra-cuu/raw/main/index.html)
-2. Mở bằng Chrome, Edge hoặc Firefox — dùng được ngay, không cần internet.
-
----
-
-## Tính năng
-
-| Tab | Chức năng |
-|-----|-----------|
-| **Tra cứu theo dự án** | Nhập thông số nhà → hiển thị yêu cầu PCCC áp dụng |
-| **Tìm kiếm tự do** | Full-text search toàn bộ QCVN 06, lọc theo Phần/Phụ lục, đánh dấu `[SĐ1]` |
+**[Dùng ngay trên trình duyệt](https://hvdo42.github.io/qcvn06-tra-cuu/)**
 
 ---
 
@@ -34,6 +19,31 @@ Công cụ tra cứu nhanh **QCVN 06:2022/BXD** tích hợp **Sửa đổi 1:202
 
 ---
 
+## Tính năng
+
+| Tab | Chức năng |
+|-----|-----------|
+| **Tra cứu theo dự án** | Nhập thông số nhà → hiển thị yêu cầu PCCC áp dụng (thang máy CC, CCTN, buồng thang, lối ra thoát nạn...) |
+| **Tìm kiếm tự do** | Full-text search toàn bộ QCVN 06, lọc theo Phần 1–7 và Phụ lục A–I, đánh dấu `[SĐ1]` |
+| **Thư viện thẩm duyệt** | Danh mục nội dung cần đối chiếu khi thẩm duyệt PCCC, theo loại công trình |
+
+---
+
+## Cách dùng
+
+**Dùng online:** Truy cập link ở trên (điện thoại / máy tính đều được).
+
+**Dùng offline (không cần mạng):** Tải file `local/index.html` từ repo về máy → mở bằng Chrome/Edge/Firefox — hoạt động 100% standalone.
+
+---
+
+## Góp ý và báo lỗi
+
+- **Báo lỗi nội dung / chính tả:** Tạo Issue mới, ghi rõ số điều khoản, nội dung hiện tại, nội dung đúng
+- **Đề xuất tính năng:** Tạo Issue mới
+
+---
+
 ## Nguồn pháp lý
 
 - **QCVN 06:2022/BXD** – Thông tư 06/2022/TT-BXD ngày 30/11/2022, hiệu lực 16/01/2023
@@ -41,8 +51,12 @@ Công cụ tra cứu nhanh **QCVN 06:2022/BXD** tích hợp **Sửa đổi 1:202
 
 ---
 
-## Báo lỗi nội dung
+## Files trong repo GitHub Pages
 
-Nội dung được xử lý tự động nên có thể còn lỗi chính tả. Rất mong nhận được góp ý!
+| File | Mục đích |
+|------|----------|
+| `index.html` | App web (66KB) — phải kèm `app_data.json` |
+| `app_data.json` | Dữ liệu (6.4MB) — browser cache sau lần đầu |
+| `local/index.html` | Bản offline standalone (6.4MB) — tải về dùng ngay |
 
-Vui lòng tạo Issue mới trên tab **Issues** ở trên, ghi rõ: số điều khoản, nội dung hiện tại, nội dung đúng.
+*Phiên bản nội dung: QCVN 06:2022/BXD + Sửa đổi 1:2023*
