@@ -3,3 +3,6 @@
 !index.html
 !README.md
 !.gitignore
+!app_data.json
+!local/
+!local/**
