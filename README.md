@@ -62,6 +62,31 @@ Full-text search toàn bộ QCVN 06:2022/BXD, lọc theo Phần 1–7 và Phụ 
 
 ---
 
+## Tính năng
+
+| Tab | Chức năng |
+|-----|-----------|
+| **Tra cứu theo dự án** | Nhập thông số nhà → hiển thị yêu cầu PCCC áp dụng (thang máy CC, CCTN, buồng thang, lối ra thoát nạn...) |
+| **Tìm kiếm tự do** | Full-text search toàn bộ QCVN 06, lọc theo Phần 1–7 và Phụ lục A–I, đánh dấu `[SĐ1]` |
+| **Thư viện thẩm duyệt** | Danh mục nội dung cần đối chiếu khi thẩm duyệt PCCC, theo loại công trình |
+
+---
+
+## Cách dùng
+
+**Dùng online:** Truy cập link ở trên (điện thoại / máy tính đều được).
+
+**Dùng offline (không cần mạng):** Tải file `local/index.html` từ repo về máy → mở bằng Chrome/Edge/Firefox — hoạt động 100% standalone.
+
+---
+
+## Góp ý và báo lỗi
+
+- **Báo lỗi nội dung / chính tả:** Tạo Issue mới, ghi rõ số điều khoản, nội dung hiện tại, nội dung đúng
+- **Đề xuất tính năng:** Tạo Issue mới
+
+---
+
 ## Nguồn pháp lý
 
 | Văn bản | Hiệu lực |
